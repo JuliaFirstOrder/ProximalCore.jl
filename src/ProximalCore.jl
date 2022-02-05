@@ -2,25 +2,11 @@ module ProximalCore
 
 using LinearAlgebra
 
-abstract type ConvexityTrait end
-struct UnknownConvexity <: ConvexityTrait end
-abstract type IsConvex <: ConvexityTrait end
-struct IsJustConvex <: IsConvex end
-struct IsStronglyConvex <: IsConvex end
+is_convex(::Type) = false
+is_convex(::T) where T = is_convex(T)
 
-convexity(::Type) = UnknownConvexity()
-
-abstract type RegularityTrait end
-struct UnknownRegularity <: RegularityTrait end
-struct IsSmooth <: RegularityTrait end
-
-regularity(::Type) = UnknownRegularity()
-
-abstract type QuadraticnessTrait end
-struct UnknownQuadraticness <: QuadraticnessTrait end
-struct IsGeneralizedQuadratic <: QuadraticnessTrait end
-
-quadraticness(::Type) = UnknownQuadraticness()
+is_generalized_quadratic(::Type) = false
+is_generalized_quadratic(::T) where T = is_generalized_quadratic(T)
 
 """
     gradient!(y, f, x)
@@ -101,11 +87,8 @@ function prox!(y, ::Zero, x, gamma)
     return real(eltype(y))(0)
 end
 
-convexity(::Type{Zero}) = IsJustConvex()
-
-regularity(::Type{Zero}) = IsSmooth()
-
-quadraticness(::Type{Zero}) = IsGeneralizedQuadratic()
+is_convex(::Type{Zero}) = true
+is_generalized_quadratic(::Type{Zero}) = true
 
 struct IndZero end
 
@@ -117,9 +100,8 @@ function (f::IndZero)(x)
     return R(0)
 end
 
-convexity(::Type{IndZero}) = IsStronglyConvex()
-
-quadraticness(::Type{IndZero}) = IsGeneralizedQuadratic()
+is_convex(::Type{IndZero}) = true
+is_generalized_quadratic(::Type{IndZero}) = true
 
 function prox!(y, ::IndZero, x, gamma)
     R = real(eltype(x))
@@ -131,17 +113,8 @@ struct ConvexConjugate{T}
     f::T
 end
 
-convexity(C::Type{ConvexConjugate{T}}) where T = convexity(regularity(T), C)
-convexity(::IsSmooth, ::Type{<:ConvexConjugate}) = IsStronglyConvex()
-convexity(::RegularityTrait, ::Type{<:ConvexConjugate}) = IsJustConvex()
-
-regularity(C::Type{ConvexConjugate{T}}) where T = regularity(convexity(T), C)
-regularity(::IsStronglyConvex, ::Type{<:ConvexConjugate}) = IsSmooth()
-regularity(::ConvexityTrait, ::Type{<:ConvexConjugate}) = UnknownRegularity()
-
-quadraticness(C::Type{ConvexConjugate{T}}) where T = quadraticness(quadraticness(T), C)
-quadraticness(::IsGeneralizedQuadratic, ::Type{<:ConvexConjugate}) = IsGeneralizedQuadratic()
-quadraticness(::QuadraticnessTrait, ::Type{<:ConvexConjugate}) = UnknownQuadraticness()
+is_convex(::Type{<:ConvexConjugate}) = true
+is_generalized_quadratic(::Type{ConvexConjugate{T}}) where T = is_generalized_quadratic(T)
 
 function prox_conjugate!(y, u, f, x, gamma)
     u .= x ./ gamma
