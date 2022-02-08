@@ -61,7 +61,7 @@ prox!(y, f, x) = prox!(y, f, x, 1)
 
 Proximal mapping for `f`, evaluated at `x`, with stepsize `gamma`.
 
-    The proximal mapping is defined as
+The proximal mapping is defined as
 ```math
 \\mathrm{prox}_{\\gamma f}(x) = \\arg\\min_z \\left\\{ f(z) + \\tfrac{1}{2\\gamma}\\|z-x\\|^2 \\right\\}.
 ```
