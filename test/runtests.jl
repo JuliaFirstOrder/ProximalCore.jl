@@ -1,7 +1,7 @@
 using Test
 using LinearAlgebra
 using ProximalCore
-using ProximalCore: prox, convex_conjugate#, moreau_envelope
+using ProximalCore: prox, gradient, convex_conjugate
 using ProximalCore: Zero, IndZero
 import ProximalCore: prox!, is_convex, is_generalized_quadratic
 
@@ -30,6 +30,13 @@ end
 
         @test is_convex(Zero())
         @test is_generalized_quadratic(Zero())
+
+        for T in [Float32, Float64]
+            @test let x = T[1.0, 2.0, 3.0]
+                prox(Zero(), x, T(42)) == (x, T(0))
+                gradient(Zero(), x) == (T[0, 0, 0], T(0))
+            end
+        end
         
     end
 
@@ -37,6 +44,12 @@ end
 
         @test is_convex(IndZero())
         @test is_generalized_quadratic(IndZero())
+
+        for T in [Float32, Float64]
+            @test let x = T[1.0, 2.0, 3.0]
+                prox(IndZero(), x, T(42)) == (T[0, 0, 0], T(0))
+            end
+        end
 
     end
     
