@@ -80,7 +80,12 @@ end
 
 struct Zero end
 
-(f::Zero)(x) = real(eltype(x))(0)
+(::Zero)(x) = real(eltype(x))(0)
+
+function gradient!(y, f::Zero, x)
+    y .= eltype(x)(0)
+    return f(x)
+end
 
 function prox!(y, ::Zero, x, gamma)
     y .= x
@@ -92,7 +97,7 @@ is_generalized_quadratic(::Type{Zero}) = true
 
 struct IndZero end
 
-function (f::IndZero)(x)
+function (::IndZero)(x)
     R = real(eltype(x))
     if iszero(x)
         return R(Inf)
