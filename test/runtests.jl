@@ -28,6 +28,9 @@ end
 
     @testset "Zero" begin
 
+        @inferred (f -> Val(is_convex(f)))(Zero())
+        @inferred (f -> Val(is_generalized_quadratic(f)))(Zero())
+
         @test is_convex(Zero())
         @test is_generalized_quadratic(Zero())
 
@@ -41,6 +44,9 @@ end
     end
 
     @testset "IndZero" begin
+
+        @inferred (f -> Val(is_convex(f)))(IndZero())
+        @inferred (f -> Val(is_generalized_quadratic(f)))(IndZero())
 
         @test is_convex(IndZero())
         @test is_generalized_quadratic(IndZero())
