@@ -19,7 +19,7 @@ Returns the value `f` at `x`.
 
 See also: [`gradient`](@ref).
 """
-gradient!(y, f, x) = error("`gradient!` is not defined for $(typeof(f))")
+gradient!
 
 """
     gradient(f, x)
@@ -53,7 +53,8 @@ Returns the value of `f` at `y`.
 
 See also: [`prox`](@ref).
 """
-prox!(y, f, x, gamma) = error("`prox!` is not defined for $(typeof(f))")
+prox!
+
 prox!(y, f, x) = prox!(y, f, x, 1)
 
 """
