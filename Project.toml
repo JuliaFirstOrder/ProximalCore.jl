@@ -3,8 +3,8 @@ uuid = "dc4f5ac2-75d1-4f31-931e-60435d74994b"
 authors = ["Lorenzo Stella <lorenzostella@gmail.com>"]
 version = "0.1.1"
 
-[compat]
-julia = "1.2"
-
 [deps]
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+
+[compat]
+julia = "1.2"
