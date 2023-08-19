@@ -1,12 +1,13 @@
 using Test
+using Aqua
 using LinearAlgebra
 using ProximalCore
 using ProximalCore: prox, gradient, convex_conjugate
 using ProximalCore: Zero, IndZero
 import ProximalCore: prox!, is_convex, is_generalized_quadratic
 
-@testset "Package sanity checks" begin
-    @test isempty(detect_unbound_args(ProximalCore))
+@testset "Aqua" begin
+    Aqua.test_all(ProximalCore)
 end
 
 struct UnitInfNormBall end
