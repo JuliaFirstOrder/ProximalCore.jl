@@ -9,36 +9,6 @@ is_generalized_quadratic(::Type) = false
 is_generalized_quadratic(::T) where T = is_generalized_quadratic(T)
 
 """
-    gradient!(y, f, x)
-
-In-place gradient (and value) of `f` at `x`.
-
-The gradient is written to the (pre-allocated) array `y`, which should have the same shape/size as `x`.
-
-Returns the value `f` at `x`.
-
-See also: [`gradient`](@ref).
-"""
-gradient!
-
-"""
-    gradient(f, x)
-
-Gradient (and value) of `f` at `x`.
-
-Return a tuple `(y, fx)` consisting of
-- `y`: the gradient of `f` at `x`
-- `fx`: the value of `f` at `x`
-
-See also: [`gradient!`](@ref).
-"""
-function gradient(f, x)
-    y = similar(x)
-    fx = gradient!(y, f, x)
-    return y, fx
-end
-
-"""
     prox!(y, f, x, gamma=1)
 
 In-place proximal mapping for `f`, evaluated at `x`, with stepsize `gamma`.
