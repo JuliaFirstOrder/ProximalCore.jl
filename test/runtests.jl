@@ -53,9 +53,10 @@ end
         @test is_generalized_quadratic(IndZero())
 
         for T in [Float32, Float64]
-            @test let x = T[1.0, 2.0, 3.0]
-                prox(IndZero(), x, T(42)) == (T[0, 0, 0], T(0))
-            end
+            x = T[1.0, 2.0, 3.0]
+            @test IndZero()(x) == T(Inf)
+            @test IndZero()(T[0, 0, 0]) == T(0)
+            @test prox(IndZero(), x, T(42)) == (T[0, 0, 0], T(0))
         end
 
     end
