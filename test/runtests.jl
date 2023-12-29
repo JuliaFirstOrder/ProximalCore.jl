@@ -2,8 +2,8 @@ using Test
 using Aqua
 using LinearAlgebra
 using ProximalCore
-using ProximalCore: prox, gradient, convex_conjugate
-using ProximalCore: Zero, IndZero
+using ProximalCore: prox
+using ProximalCore: Zero, IndZero, convex_conjugate
 import ProximalCore: prox!, is_convex, is_generalized_quadratic
 
 @testset "Aqua" begin
@@ -36,10 +36,10 @@ end
         @test is_generalized_quadratic(Zero())
 
         for T in [Float32, Float64]
-            @test let x = T[1.0, 2.0, 3.0]
-                prox(Zero(), x, T(42)) == (x, T(0))
-                gradient(Zero(), x) == (T[0, 0, 0], T(0))
-            end
+            x = T[1.0, 2.0, 3.0]
+            @test Zero()(x) == T(0)
+            @test prox(Zero(), x, T(42)) == (x, T(0))
+            @test prox(Zero(), x, ) == (x, T(0))
         end
         
     end
@@ -57,7 +57,18 @@ end
             @test IndZero()(x) == T(Inf)
             @test IndZero()(T[0, 0, 0]) == T(0)
             @test prox(IndZero(), x, T(42)) == (T[0, 0, 0], T(0))
+            @test prox(IndZero(), x) == (T[0, 0, 0], T(0))
         end
+
+    end
+
+    @testset "Others" begin
+
+        @inferred (f -> Val(is_convex(f)))(42)
+        @inferred (f -> Val(is_generalized_quadratic(f)))(42)
+
+        @test !is_convex(42)
+        @test !is_generalized_quadratic(42)
 
     end
     
