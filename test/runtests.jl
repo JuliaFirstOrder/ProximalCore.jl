@@ -2,9 +2,9 @@ using Test
 using Aqua
 using LinearAlgebra
 using ProximalCore
-using ProximalCore: prox, prox!
+using ProximalCore: prox
 using ProximalCore: Zero, IndZero, convex_conjugate
-import ProximalCore: is_convex, is_generalized_quadratic
+import ProximalCore: prox!, is_convex, is_generalized_quadratic
 
 @testset "Aqua" begin
     Aqua.test_all(ProximalCore)
