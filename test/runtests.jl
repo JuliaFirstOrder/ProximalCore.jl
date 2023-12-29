@@ -58,6 +58,16 @@ end
         end
 
     end
+
+    @testset "Others" begin
+
+        @inferred (f -> Val(is_convex(f)))(42)
+        @inferred (f -> Val(is_generalized_quadratic(f)))(42)
+
+        @test !is_convex(42)
+        @test !is_generalized_quadratic(42)
+
+    end
     
     @testset "Conjugation" begin
 
