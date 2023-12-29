@@ -53,11 +53,6 @@ struct Zero end
 
 (::Zero)(x) = real(eltype(x))(0)
 
-function gradient!(y, f::Zero, x)
-    y .= eltype(x)(0)
-    return f(x)
-end
-
 function prox!(y, ::Zero, x, gamma)
     y .= x
     return real(eltype(y))(0)
