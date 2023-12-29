@@ -101,9 +101,9 @@ struct IndZero end
 function (::IndZero)(x)
     R = real(eltype(x))
     if iszero(x)
-        return R(Inf)
+        return R(0)
     end
-    return R(0)
+    return R(Inf)
 end
 
 is_convex(::Type{IndZero}) = true
