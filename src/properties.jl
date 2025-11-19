@@ -47,7 +47,8 @@ is_singleton_indicator(::T) where T = is_singleton_indicator(T)
     is_cone_indicator(T::Type)
 
 Returns `true` if the type `T` represents the indicator function of a cone.
-A function f(x) is a cone if it is convex, positively homogeneous, and it returns 0 if and only if x is in a cone.
+A cone is a set C such that if x ∈ C, then λx ∈ C for any λ ≥ 0. In other words, is a set that is closed under non-negative scaling.
+``
 In other words, if f(x) = 0, then f(λx) = 0 for all λ ≥ 0.
 """
 is_cone_indicator(::Type) = false
