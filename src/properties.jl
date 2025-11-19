@@ -10,8 +10,8 @@ is_convex(::T) where T = is_convex(T)
 """
     is_generalized_quadratic(T::Type)
 
-Returns `true` if the type `T` represents a generalized quadratic function.
-The general form of a quadratic function is f(x)=ax2+bx+c where a, b, and c are real numbers and a≠0.
+Returns `true` if the type `T` represents a generalized quadratic function, i.e. a quadratic function over a subspace and +∞ outside of it.
+A quadratic function has the form f(x)=(1/2)*<Ax, x> + <b, x> + c where A is a symmetric matrix, b is a vector, and c a real number.
 """
 is_generalized_quadratic(::Type) = false
 is_generalized_quadratic(::T) where T = is_generalized_quadratic(T)
@@ -46,7 +46,7 @@ is_singleton_indicator(::T) where T = is_singleton_indicator(T)
 """
     is_cone_indicator(T::Type)
 
-Returns `true` if the type `T` represents a conic indicator function.
+Returns `true` if the type `T` represents the indicator function of a cone.
 A function f(x) is a cone if it is convex, positively homogeneous, and it returns 0 if and only if x is in a cone.
 In other words, if f(x) = 0, then f(λx) = 0 for all λ ≥ 0.
 """
@@ -56,10 +56,10 @@ is_cone_indicator(::T) where T = is_cone_indicator(T)
 """
     is_affine_indicator(T::Type)
 
-Returns `true` if the type `T` represents an affine indicator function.
+Returns `true` if the type `T` represents the indicator of an affine set.
 A function f(x) is affine if it is convex and it returns 0 if and only if x is in an affine set.
 An affine set is a set that can be represented as the solution set of a system of linear equations.
-In other words, f(x) = 0 if and only if Ax = b, where A is a matrix and b is a vector or A is a vector and b is a scalar.
+In other words, f(x) = 0 if Ax = b, for a given matrix  A and vector b, and ∞ otherwise.
 """
 is_affine_indicator(T::Type) = is_singleton_indicator(T)
 is_affine_indicator(::T) where T = is_affine_indicator(T)
@@ -68,7 +68,7 @@ is_affine_indicator(::T) where T = is_affine_indicator(T)
     is_set_indicator(T::Type)
 
 Returns `true` if the type `T` represents an indicator function of a set.
-A function f(x) is a set if it is convex and it returns 0 if and only if x is in a set.
+The indicator of a set S is a function associating 0 to points in S, and ∞ otherwise.
 """
 is_set_indicator(T::Type) = is_cone_indicator(T) || is_affine_indicator(T)
 is_set_indicator(::T) where T = is_set_indicator(T)
@@ -85,8 +85,8 @@ is_positively_homogeneous(::T) where T = is_positively_homogeneous(T)
 """
     is_support(T::Type)
 
-Returns `true` if the type `T` represents a support function over a set.
-A function f(x) is a support function over a set C if f(x) = sup{⟨x, c⟩ : c ∈ C}.
+Returns `true` if the type `T` represents a support function of a set.
+A function f(x) is a support function of a set C if f(x) = sup{⟨x, c⟩ : c ∈ C}.
 """
 is_support(T::Type) = is_convex(T) && is_positively_homogeneous(T)
 is_support(::T) where T = is_support(T)
