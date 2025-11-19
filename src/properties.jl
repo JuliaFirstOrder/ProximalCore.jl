@@ -57,7 +57,6 @@ is_cone_indicator(::T) where T = is_cone_indicator(T)
     is_affine_indicator(T::Type)
 
 Returns `true` if the type `T` represents the indicator of an affine set.
-A function f(x) is affine if it is convex and it returns 0 if and only if x is in an affine set.
 An affine set is a set that can be represented as the solution set of a system of linear equations.
 In other words, f(x) = 0 if Ax = b, for a given matrix  A and vector b, and ∞ otherwise.
 """
